@@ -12,4 +12,4 @@ class Plate(pygame.sprite.Sprite):
             display.blit(self.image, self.rect)
 
     
-plate = Plate()   
+#plate = Plate()   

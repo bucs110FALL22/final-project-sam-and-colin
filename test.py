@@ -41,67 +41,42 @@ def Scoreboard():
 class Ball(pygame.sprite.Sprite):
     def __init__(self,x, y):
         super().__init__()
-        self.sprites = []
-        self.isanimating = False
-        self.sprites.append(pygame.image.load('assets/baseball.png'))
-        self.sprites.append(pygame.image.load('assets/hit.png'))
-
-        self.currentsprite = 0
-        self.image = self.sprites[self.currentsprite]
-        
+        pygame.init()
         self.image = pygame.image.load('assets/baseball.png').convert_alpha()
         self.image = pygame.transform.scale(self.image, (20, 20))
         self.rect = self.image.get_rect()
         self.rect.midtop = (x,y)
+        self.direction = -1
         self.inmotion = None 
-        self.dx = random.uniform(-2,2)
-      
-    def animate(self):
-        self.is_animating = True
+        self.dx = random.uniform(-3,3)
       
     def update(self, bat):
-        if self.is_animating == True:
-           self.current_sprite += 1
-        if self.current_sprite >= len(self.sprites):
-            self.current_sprite = 0
-            self.is_animating = False
-          
-        self.image = self.sprites[self.current_sprite]
-            
-
         pressed_keys = pygame.key.get_pressed()
         if pressed_keys[pygame.K_p]:
             self.inmotion = True
         if self.inmotion:
                 self.rect.y += random.randint(1,10)
         if self.rect.colliderect(bat.rect) and pressed_keys[pygame.K_SPACE]:
-            self.image = pygame.image.load('assets/hit.png').convert_alpha()
             self.inmotion = False
         if self.inmotion == False:
-            self.rect.y -= 1
-            # self.rect.x -= self.dx
+            self.direction *= 1
+            self.rect.y -= 3
+            self.rect.x += self.dx * self.direction
         if pygame.sprite.spritecollide(self,outfielderGroup,False, None):
-            #self.image = pygame.image.load('assets/catch.png').convert_alpha()
             self.kill()
-            pygame.sprite.group.empty.ballGroup()
-            out = out+1
+            pygame.sprite.Group.empty(ballGroup)
             ballGroup.add(Ball(400,400))
-         
-    while True:  
-      for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-          pygame.quit()
-          sys.exit()  
-        if event.type == pygame.KEYDOWN:
-          
-          ball.animate()
+        if pygame.sprite.collide_rect(self,catcher):
+            self.kill()
+            pygame.sprite.Group.empty(ballGroup)
+            ballGroup.add(Ball(400,400))
 
     def render(self, display):
         display.blit(self.image, self.rect)
     
 ballGroup = pygame.sprite.Group()
 ballGroup.add(Ball(400,400))
-ball = Ball(10,10)  
+
 
 class Bat(pygame.sprite.Sprite):
     def __init__(self):
