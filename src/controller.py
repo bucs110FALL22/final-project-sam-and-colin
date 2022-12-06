@@ -8,7 +8,15 @@ from src.scoreboard import Scoreboard
 
 
 class Controller:
+    '''
+    This class bring all the classes together to make the gae function hense the name controller. 
+    '''
     def __init__(self):
+        '''
+        This function creates the dispaly for the hame and sets a title and creates the background image for the game.
+        it also defines the font used and sets each class imports to self."class". The sprite groups for the
+        ball, and outfielder classes are also create here
+        '''
         pygame.init()
         # initializes pygame displays screen creates varables for classes 
         self.display = pygame.display.set_mode((800, 800))
@@ -35,6 +43,11 @@ class Controller:
     
         
     def mainloop(self):
+        '''
+        In this function is where the game runs. This function updates the scores if certain function are met.
+        It also creates the movement for the ball and makes sure it works proprly. This function also allows the
+        batter animation to run. 
+        '''
         self.gameOn = True
         while self.gameOn == True:
             for event in pygame.event.get():
@@ -53,8 +66,6 @@ class Controller:
                     else:
                       self.is_animating = False
 
-                    #checks for collision in sprites that update scoreboard 
-
             if (self.ballGroup.sprites()[0].rect.colliderect(self.catcher.rect)):
                 self.scoreboard.update()
             if (self.ballGroup.sprites()[0].rect.colliderect(self.outfielderGroup.sprites()[0])):
@@ -70,10 +81,8 @@ class Controller:
             self.catcher.render(self.display)
             for outfielder in self.outfielderGroup:
                 outfielder.render(self.display)
-                #if out or homerun is scored we update scoreboard
             board = []
             for ball in self.ballGroup:
-                #ball.update(outfielder)
                 result = ball.update(self.bat)
                 if result:
                   board.append(result)

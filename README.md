@@ -23,17 +23,21 @@ Homerun derby where P is to pitch and space is to swing the bat. The gloves prev
 ## User Interface Design
 
 - **Initial Concept**
-  - ![Screen Shot 2022-12-05 at 4](Screen%20Shot%202022-12-05%20at%204_2.png)
+  - ![Initial Concept](original.png)
+
+  - 
     
     
 - **Final GUI**
-  - ![IMG_2358](IMG_2358.jpeg)
+  - ![Final GUI](IMG_2358.jpeg)
 
 ***        
 
 ## Program Design
 
 * Non-Standard libraries
+
+    * SYS module
     
 * Class Interface Design
     * 
